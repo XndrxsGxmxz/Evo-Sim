@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Estudiante</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen p-8">
+    <div class="max-w-4xl mx-auto bg-white p-6 rounded-2xl shadow-md">
+        <h2 class="text-2xl font-bold mb-4 text-indigo-700 text-center">Panel de Estudiante</h2>
+        
+        <!-- Formulario para seleccionar el país -->
+        <form method="POST" class="mb-6">
+            <label for="pais" class="block text-sm font-medium text-gray-700">Selecciona un país:</label>
+            <input type="text" name="pais" id="pais" placeholder="Ejemplo: Colombia" 
+                   class="w-full px-4 py-2 border border-gray-300 rounded-md mb-4" required>
+            <button type="submit" 
+                    class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-md transition">
+                Consultar
+            </button>
+        </form>
+
+        <!-- Mostrar datos de la API -->
+        {% if datos_api %}
+        <div class="mb-6">
+            <h3 class="text-lg font-bold text-gray-800">Datos de COVID-19 en {{ datos_api.pais }}</h3>
+            <ul class="list-disc pl-5">
+                <li><strong>Casos totales:</strong> {{ datos_api.casos }}</li>
+                <li><strong>Muertes:</strong> {{ datos_api.muertes }}</li>
+                <li><strong>Recuperados:</strong> {{ datos_api.recuperados }}</li>
+                <li><strong>Casos activos:</strong> {{ datos_api.activos }}</li>
+                <li><strong>Última actualización:</strong> {{ datos_api.fecha_actualizacion }}</li>
+            </ul>
+        </div>
+        {% endif %}
+
+        <!-- Mostrar gráfico generado -->
+        {% if grafico %}
+        <div class="text-center">
+            <h3 class="text-lg font-bold text-gray-800 mb-4">Distribución de casos</h3>
+            <img src="data:image/png;base64,{{ grafico }}" alt="Gráfico de distribución de casos" class="mx-auto">
+        </div>
+        {% endif %}
+
+        <!-- Botón para volver al inicio -->
+        <div class="mt-6 text-center">
+            <a href="{{ url_for('index') }}" 
+               class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-md transition">
+                Volver al inicio
+            </a> 
+    </div>
+</body>
+</html>
