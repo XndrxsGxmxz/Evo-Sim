@@ -5,39 +5,98 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Administrador</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body class="bg-gray-100 min-h-screen p-8">
     <div class="max-w-2xl mx-auto bg-white p-6 rounded-2xl shadow-md">
         <h2 class="text-2xl font-bold mb-4 text-indigo-700 text-center">Panel de Administrador</h2>
-        <form method="POST" class="space-y-4">
+
+        <!-- Mensajes Flash -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="p-4 mb-4 rounded-md {{ 'bg-green-100 text-green-700' if category == 'success' else 'bg-red-100 text-red-700' }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <!-- Formulario existente -->
+        <form method="POST" action="{{ url_for('admin.home') }}" class="space-y-4">
             <div>
                 <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre de usuario</label>
-                <input type="text" name="nombre" required class="w-full px-4 py-2 border border-gray-300 rounded-md">
+                <input type="text" name="nombre" id="nombre" required class="w-full px-4 py-2 border border-gray-300 rounded-md">
             </div>
             <div>
                 <label for="correo" class="block text-sm font-medium text-gray-700">Correo electrónico</label>
-                <input type="email" name="correo" required class="w-full px-4 py-2 border border-gray-300 rounded-md">
+                <input type="email" name="correo" id="correo" required class="w-full px-4 py-2 border border-gray-300 rounded-md">
             </div>
             <div>
                 <label for="contrasena" class="block text-sm font-medium text-gray-700">Contraseña</label>
-                <input type="password" name="contrasena" required class="w-full px-4 py-2 border border-gray-300 rounded-md">
+                <input type="password" name="contrasena" id="contrasena" required class="w-full px-4 py-2 border border-gray-300 rounded-md">
             </div>
             <div>
                 <label for="rol" class="block text-sm font-medium text-gray-700">Rol</label>
-                <select name="rol" required class="w-full px-4 py-2 border border-gray-300 rounded-md">
-                    <option value="Administrador">Administrador</option>
+                <select name="rol" id="rol" required class="w-full px-4 py-2 border border-gray-300 rounded-md">
+                    <option value="Admin">Administrador</option>
                     <option value="Investigador">Investigador</option>
                     <option value="Estudiante">Estudiante</option>
-                    <option value="Profesional">Profesional</option>
                     <option value="Autoridad">Autoridad</option>
                 </select>
             </div>
-            <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-md transition">Crear Usuario</button>
+            <button type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700">
+                <i class="fas fa-user-plus mr-2"></i>Crear Usuario
+            </button>
         </form>
 
-        <div class="mt-6 text-center">
-            <a href="{{ url_for('index') }}" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-md transition">Volver al inicio</a>
-            
+        <!-- Agregar después del formulario de crear usuario -->
+        <div class="mt-8">
+            <h3 class="text-lg font-semibold mb-4">Lista de Usuarios</h3>
+            <div class="overflow-x-auto">
+                <table class="min-w-full table-auto">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Usuario</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Correo</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rol</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        {% for usuario in usuarios %}
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ usuario.nombre_usuario }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ usuario.correo }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ usuario.rol }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <form action="{{ url_for('admin.eliminar_usuario', user_id=usuario.id) }}" method="POST" class="inline">
+                                    <button type="submit" 
+                                            onclick="return confirm('¿Estás seguro de que deseas eliminar este usuario?')"
+                                            class="text-red-600 hover:text-red-900"
+                                            {% if usuario.rol == 'admin' and usuario.id == current_user.id %}disabled{% endif %}>
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Botones de navegación -->
+        <div class="mt-6 flex justify-center space-x-4">
+            <a href="{{ url_for('index') }}" 
+               class="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded-md transition">
+                <i class="fas fa-home mr-2"></i>Inicio
+            </a>
+            <a href="{{ url_for('auth.logout') }}" 
+               class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-md transition">
+                <i class="fas fa-sign-out-alt mr-2"></i>Cerrar Sesión
+            </a>
+        </div>
     </div>
 </body>
 </html>

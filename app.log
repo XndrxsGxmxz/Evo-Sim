@@ -1,0 +1,65 @@
+2025-05-18 22:36:56,620 WARNING:  * Debugger is active!
+2025-05-18 22:36:56,620 INFO:  * Debugger PIN: 670-807-941
+2025-05-18 22:37:33,951 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-18 22:37:33,952 INFO: [33mPress CTRL+C to quit[0m
+2025-05-18 22:37:33,996 INFO:  * Restarting with watchdog (windowsapi)
+2025-05-18 22:37:35,872 WARNING:  * Debugger is active!
+2025-05-18 22:37:35,872 INFO:  * Debugger PIN: 670-807-941
+2025-05-18 22:37:56,164 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-18 22:37:56,165 INFO: [33mPress CTRL+C to quit[0m
+2025-05-18 22:37:56,168 INFO:  * Restarting with watchdog (windowsapi)
+2025-05-18 22:37:57,819 WARNING:  * Debugger is active!
+2025-05-18 22:37:57,819 INFO:  * Debugger PIN: 670-807-941
+2025-05-18 22:40:20,372 INFO:  * Detected change in 'C:\\Users\\Lenovo\\Downloads\\evo_sim\\evo_sim_1.0\\app.py', reloading
+2025-05-18 22:40:20,387 INFO:  * Detected change in 'C:\\Users\\Lenovo\\Downloads\\evo_sim\\evo_sim_1.0\\app.py', reloading
+2025-05-18 22:40:20,389 INFO:  * Detected change in 'C:\\Users\\Lenovo\\Downloads\\evo_sim\\evo_sim_1.0\\app.py', reloading
+2025-05-18 22:40:24,348 INFO:  * Restarting with watchdog (windowsapi)
+2025-05-18 22:40:50,377 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-18 22:40:50,378 INFO: [33mPress CTRL+C to quit[0m
+2025-05-18 22:40:50,396 INFO:  * Restarting with watchdog (windowsapi)
+2025-05-18 22:40:52,159 WARNING:  * Debugger is active!
+2025-05-18 22:40:52,171 INFO:  * Debugger PIN: 670-807-941
+2025-05-18 22:41:14,567 INFO:  * Detected change in 'C:\\Users\\Lenovo\\Downloads\\evo_sim\\evo_sim_1.0\\modelss.py', reloading
+2025-05-18 22:41:16,041 INFO:  * Restarting with watchdog (windowsapi)
+2025-05-18 22:41:19,682 WARNING:  * Debugger is active!
+2025-05-18 22:41:19,684 INFO:  * Debugger PIN: 670-807-941
+2025-05-18 22:42:27,923 INFO:  * Detected change in 'C:\\Users\\Lenovo\\Downloads\\evo_sim\\evo_sim_1.0\\run.py', reloading
+2025-05-18 22:42:30,062 INFO:  * Restarting with watchdog (windowsapi)
+2025-05-18 22:42:33,552 WARNING:  * Debugger is active!
+2025-05-18 22:42:33,566 INFO:  * Debugger PIN: 670-807-941
+2025-05-18 22:44:12,368 INFO:  * Detected change in 'C:\\Users\\Lenovo\\Downloads\\evo_sim\\evo_sim_1.0\\run.py', reloading
+2025-05-18 22:44:12,395 INFO:  * Detected change in 'C:\\Users\\Lenovo\\Downloads\\evo_sim\\evo_sim_1.0\\run.py', reloading
+2025-05-18 22:44:14,154 INFO:  * Restarting with watchdog (windowsapi)
+2025-05-18 22:44:17,660 WARNING:  * Debugger is active!
+2025-05-18 22:44:17,660 INFO:  * Debugger PIN: 670-807-941
+2025-05-18 22:44:21,930 INFO:  * Detected change in 'C:\\Users\\Lenovo\\Downloads\\evo_sim\\evo_sim_1.0\\app.py', reloading
+2025-05-18 22:44:21,930 INFO:  * Detected change in 'C:\\Users\\Lenovo\\Downloads\\evo_sim\\evo_sim_1.0\\app.py', reloading
+2025-05-18 22:44:21,930 INFO:  * Detected change in 'C:\\Users\\Lenovo\\Downloads\\evo_sim\\evo_sim_1.0\\app.py', reloading
+2025-05-18 22:44:23,267 INFO:  * Restarting with watchdog (windowsapi)
+2025-05-18 22:44:25,971 WARNING:  * Debugger is active!
+2025-05-18 22:44:25,971 INFO:  * Debugger PIN: 670-807-941
+2025-05-18 22:44:26,326 INFO:  * Detected change in 'C:\\Users\\Lenovo\\Downloads\\evo_sim\\evo_sim_1.0\\app.py', reloading
+2025-05-18 22:44:26,329 INFO:  * Detected change in 'C:\\Users\\Lenovo\\Downloads\\evo_sim\\evo_sim_1.0\\app.py', reloading
+2025-05-18 22:44:26,330 INFO:  * Detected change in 'C:\\Users\\Lenovo\\Downloads\\evo_sim\\evo_sim_1.0\\app.py', reloading
+2025-05-18 22:44:27,310 INFO:  * Restarting with watchdog (windowsapi)
+2025-05-18 22:44:30,069 WARNING:  * Debugger is active!
+2025-05-18 22:44:30,069 INFO:  * Debugger PIN: 670-807-941
+2025-05-18 22:44:35,293 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-18 22:44:35,294 INFO: [33mPress CTRL+C to quit[0m
+2025-05-18 22:44:35,299 INFO:  * Restarting with watchdog (windowsapi)
+2025-05-18 22:44:36,891 WARNING:  * Debugger is active!
+2025-05-18 22:44:36,901 INFO:  * Debugger PIN: 670-807-941
+2025-05-18 22:45:10,892 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-18 22:45:10,892 INFO: [33mPress CTRL+C to quit[0m
+2025-05-18 22:45:10,912 INFO:  * Restarting with watchdog (windowsapi)
+2025-05-18 22:45:13,041 WARNING:  * Debugger is active!
+2025-05-18 22:45:13,041 INFO:  * Debugger PIN: 670-807-941
+2025-05-18 22:45:55,851 INFO: 127.0.0.1 - - [18/May/2025 22:45:55] "[32mGET / HTTP/1.1[0m" 302 -
+2025-05-18 22:45:56,899 INFO: 127.0.0.1 - - [18/May/2025 22:45:56] "GET /auth/login HTTP/1.1" 200 -
+2025-05-18 22:46:12,953 INFO: 127.0.0.1 - - [18/May/2025 22:46:12] "[32mPOST /auth/login HTTP/1.1[0m" 302 -
+2025-05-18 22:46:13,008 INFO: 127.0.0.1 - - [18/May/2025 22:46:13] "GET /admin/admin HTTP/1.1" 200 -

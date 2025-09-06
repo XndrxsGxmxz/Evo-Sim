@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Autoridad Sanitaria</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen p-8">
+    <div class="max-w-4xl mx-auto bg-white p-6 rounded-2xl shadow-md">
+        <h2 class="text-2xl font-bold mb-4 text-indigo-700 text-center">Panel de Autoridad Sanitaria</h2>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="p-4 mb-4 rounded-md {{ 'bg-green-100 text-green-700' if category == 'success' else 'bg-red-100 text-red-700' }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <!-- Ver simulaciones existentes -->
+        {% if simulaciones %}
+        <div class="mb-8">
+            <h3 class="text-lg font-semibold mb-4">Simulaciones Guardadas</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {% for sim in simulaciones %}
+                <div class="border p-4 rounded-lg shadow-sm bg-white hover:shadow-md transition-shadow">
+                    <p class="mb-3 text-gray-700">
+                        {{ sim.nombre_usuario }}
+                        <br>
+                        β={{ sim.beta }} γ={{ sim.gamma }}
+                        <br>
+                        {{ sim.fecha.strftime('%Y-%m-%d') }}
+                    </p>
+                    <div class="flex gap-2">
+                        <form method="post" action="{{ url_for('autoridad.ver_simulacion') }}" class="flex-1">
+                            <input type="hidden" name="simulacion_id" value="{{ sim.id }}">
+                            <button type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition-colors">
+                                Ver Simulación
+                            </button>
+                        </form>
+                        <form action="{{ url_for('autoridad.eliminar_simulacion') }}" method="POST" class="flex-1">
+                            <input type="hidden" name="simulacion_id" value="{{ sim.id }}">
+                            <button type="submit" class="w-full bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700 transition-colors"
+                                    onclick="return confirm('¿Está seguro de eliminar esta simulación?')">
+                                Eliminar
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Mostrar simulación seleccionada -->
+        {% if grafico %}
+        <div class="mb-8">
+            <h3 class="text-lg font-semibold mb-4">Simulación Seleccionada</h3>
+            <img src="data:image/png;base64,{{ grafico }}" alt="Simulación" class="w-full rounded-md shadow-md">
+        </div>
+        {% endif %}
+
+        <!-- Formulario para nueva simulación -->
+        <div class="mt-8">
+            <h3 class="text-lg font-semibold mb-4">Guardar Nueva Simulación</h3>
+            <form method="post" action="{{ url_for('autoridad.guardar_simulacion') }}" enctype="multipart/form-data" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Nombre de usuario</label>
+                    <input type="text" name="nombre_usuario" class="w-full p-2 border rounded-md" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Valor de β</label>
+                    <input type="number" step="0.01" name="beta" class="w-full p-2 border rounded-md" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Valor de γ</label>
+                    <input type="number" step="0.01" name="gamma" class="w-full p-2 border rounded-md" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Gráfico de simulación</label>
+                    <input type="file" name="grafico" accept="image/png" class="w-full p-2 border rounded-md" required>
+                </div>
+                <button type="submit" class="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700">
+                    Guardar Simulación
+                </button>
+            </form>
+        </div>
+
+        <!-- Botón para volver al inicio -->
+        <div class="mt-6 text-center">
+            <a href="{{ url_for('index') }}" class="inline-block bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700">
+                Volver al inicio
+            </a>
+        </div>
+    </div>
+</body>
+</html>

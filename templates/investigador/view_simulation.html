@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulation View</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Vista de Simulación</h1>
+        
+        <div class="simulation-container">
+            {% if grafico %}
+                <img src="data:image/png;base64,{{ grafico }}" 
+                     alt="Simulación" 
+                     id="simulation-image"
+                     class="simulation-image">
+                
+                <div class="button-container">
+                    <button onclick="guardarSimulacion()" 
+                            class="btn btn-success">
+                        <i class="fas fa-save"></i> Guardar Simulación
+                    </button>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+    async function guardarSimulacion() {
+        try {
+            // Get the image data
+            const img = document.getElementById('simulation-image');
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0);
+            
+            // Convert to blob
+            canvas.toBlob(async (blob) => {
+                const formData = new FormData();
+                formData.append('imagen', blob, 'simulacion.png');
+                formData.append('beta', '{{ beta }}');
+                formData.append('gamma', '{{ gamma }}');
+
+                const response = await fetch('{{ url_for("investigador.guardar_simulacion") }}', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    alert('Simulación guardada exitosamente');
+                } else {
+                    alert('Error al guardar la simulación: ' + result.error);
+                }
+            }, 'image/png');
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error al guardar la simulación');
+        }
+    }
+    </script>
+</body>
+</html>

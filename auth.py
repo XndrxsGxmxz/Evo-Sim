@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash
-from flask_login import login_user
+from flask_login import login_user, logout_user, login_required
 from extensiones import db, bcrypt
 from models import Usuario
 
@@ -17,15 +17,34 @@ def login():
             return redirect(url_for('auth.login'))
 
         # Buscar usuario en la base de datos
-        user = Usuario.query.filter_by(correo=correo).first()
-        if user and bcrypt.check_password_hash(user.contrasena, contrasena):
-            login_user(user)
-            session['usuario'] = user.nombre_usuario
-            session['rol'] = user.rol
-            return redirect(f'/{user.rol.lower()}')
+        usuario = Usuario.query.filter_by(correo=correo).first()
+        if usuario and bcrypt.check_password_hash(usuario.contrasena, contrasena):
+            login_user(usuario)
+            session['usuario'] = usuario.nombre_usuario
+            session['rol'] = usuario.rol
+            
+            # Redirección según el rol
+            if usuario.rol == 'Admin':
+                return redirect(url_for('admin.home'))
+            elif usuario.rol == 'Investigador':
+                return redirect(url_for('investigador.panel_investigador'))
+            elif usuario.rol == 'Estudiante':
+                return redirect(url_for('estudiante.panel_estudiante'))
+            elif usuario.rol == 'Autoridad':
+                return redirect(url_for('autoridad.home'))
+            else:
+                flash('Rol no reconocido.', 'error')
+                return redirect(url_for('auth.login'))
         
         # Si las credenciales son incorrectas
         flash('Correo o contraseña incorrectos.', 'error')
         return redirect(url_for('auth.login'))
 
     return render_template('login.html')
+
+@auth.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    flash('Has cerrado sesión exitosamente.', 'success')
+    return redirect(url_for('auth.login'))

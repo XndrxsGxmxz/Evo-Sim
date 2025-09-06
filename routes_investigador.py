@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+import app
+from flask import Blueprint, render_template, request, redirect, url_for, send_file, jsonify, current_app, flash
 from flask_login import login_required, current_user
 import numpy as np
 from scipy.integrate import odeint
@@ -8,8 +9,13 @@ import matplotlib.pyplot as plt
 import os
 import requests
 from matplotlib.ticker import FuncFormatter
+from datetime import datetime
+from werkzeug.utils import secure_filename
+from models import Simulacion
+from extensiones import db
+import base64
 
-investigador = Blueprint('investigador', __name__)
+investigador = Blueprint('investigador', __name__, url_prefix='/investigador')
 
 def obtener_datos_reales():
     # Obtener datos históricos de Colombia
@@ -40,7 +46,17 @@ def obtener_datos_reales():
         print(f"Error al obtener datos de la API: {e}")
         return None, None, None, None
 
-@investigador.route('/', methods=['GET', 'POST'])
+@investigador.route('/')
+@investigador.route('/home')
+@login_required
+def home():
+    if current_user.rol != 'Investigador':
+        flash('No tienes permiso para acceder a esta página.', 'error')
+        return redirect(url_for('auth.login'))
+    valores = {}  # O puedes poner valores por defecto, ej: {'beta': 0.3, ...}
+    return render_template('investigador.html', valores=valores)
+
+@investigador.route('/panel', methods=['GET', 'POST'])
 @login_required
 def panel_investigador():
     if not current_user.is_authenticated or current_user.rol != 'Investigador':
@@ -156,3 +172,94 @@ def panel_investigador():
             error = str(e)
 
     return render_template('investigador.html', valores=valores, imagen=imagen, error=error)
+
+def guardar_simulacion_db(nombre_usuario, beta, gamma, imagen_path):
+    """Guarda la información de la simulación en la base de datos"""
+    with open(imagen_path, 'rb') as img_file:
+        imagen_binaria = img_file.read()
+    
+    nueva_simulacion = Simulacion(
+        nombre_usuario=nombre_usuario,
+        beta=beta,
+        gamma=gamma,
+        nombre_imagen=os.path.basename(imagen_path),
+        imagen=imagen_binaria,
+        fecha=datetime.now()
+    )
+    
+    db.session.add(nueva_simulacion)
+    db.session.commit()
+    return nueva_simulacion.id
+
+@investigador.route('/guardar_simulacion', methods=['POST'])
+@login_required
+def guardar_simulacion():
+    try:
+        if 'imagen' not in request.files:
+            return jsonify({'error': 'No image provided'}), 400
+
+        imagen = request.files['imagen']
+        beta = float(request.form.get('beta', 0))
+        gamma = float(request.form.get('gamma', 0))
+
+        # Create directory if it doesn't exist
+        sim_folder = os.path.join(current_app.root_path, 'static', 'simulaciones')
+        os.makedirs(sim_folder, exist_ok=True)
+
+        # Generate unique filename
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        filename = secure_filename(f"sim_{current_user.nombre_usuario}_{timestamp}.png")
+        filepath = os.path.join(sim_folder, filename)
+
+        # Save image file
+        imagen.save(filepath)
+
+        # Save to database
+        with open(filepath, 'rb') as img_file:
+            imagen_data = img_file.read()
+
+        nueva_simulacion = Simulacion(
+            nombre_usuario=current_user.nombre_usuario,
+            beta=beta,
+            gamma=gamma,
+            nombre_imagen=filename,
+            imagen=imagen_data,
+            fecha=datetime.now()
+        )
+
+        db.session.add(nueva_simulacion)
+        db.session.commit()
+
+        return jsonify({
+            'success': True,
+            'message': 'Simulación guardada exitosamente',
+            'simulation_id': nueva_simulacion.id
+        })
+
+    except Exception as e:
+        print(f"Error saving simulation: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+@investigador.route('/ver_simulacion')
+@login_required
+def ver_simulacion():
+    pass
+
+@investigador.route('/download_simulation_image/<int:simulation_id>')
+@login_required
+def download_simulation_image(simulation_id):
+    # Obtener la simulación desde la base de datos
+    simulation = simulation.query.get_or_404(simulation_id)
+    
+    # Verificar que el archivo existe
+    image_path = os.path.join(app.config['UPLOAD_FOLDER'], simulation.image_filename)
+    if not os.path.exists(image_path):
+        os.abort(404)
+    
+    # Enviar el archivo para descarga
+    return send_file(
+        image_path,
+        as_attachment=True,
+        download_name=f'simulation_{simulation_id}.png',
+        mimetype='image/png'
+    )

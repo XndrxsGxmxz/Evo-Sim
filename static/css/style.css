@@ -1,0 +1,60 @@
+/* ...existing code... */
+.simulation-container {
+    text-align: center;
+    margin: 20px 0;
+    padding: 20px;
+}
+
+.simulation-image {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    padding: 8px 16px;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 20px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: white;
+    border: none;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}
+
+.mr-2 {
+    margin-right: 0.5rem;
+}
+
+/* ...existing code... */
