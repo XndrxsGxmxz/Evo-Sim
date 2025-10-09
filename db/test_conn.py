@@ -1,10 +1,10 @@
-import psycopg2 # type: ignore
+import psycopg2 
 
 try:
     conn = psycopg2.connect(
         dbname="evo_sim",
         user="postgres",
-        password="Juan5880#",   # tu contraseña real
+        password="Juan5880#",   
         host="localhost"
     )
     print("✅ Conexión exitosa")

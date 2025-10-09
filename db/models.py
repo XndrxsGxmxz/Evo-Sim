@@ -1,13 +1,12 @@
-from extensiones import db
 from datetime import datetime
-from flask_login import UserMixin # type: ignore
+from .extensiones import db
+from flask_login import UserMixin
 
-class Usuario(UserMixin, db.Model):
-    __tablename__ = 'usuarios'
+class Usuario(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
-    nombre_usuario = db.Column(db.String(50), unique=True, nullable=False)
-    correo = db.Column(db.String(100), unique=True, nullable=False)
-    contrasena = db.Column(db.Text, nullable=False)
+    nombre_usuario = db.Column(db.String(150), nullable=False)
+    correo = db.Column(db.String(150), unique=True, nullable=False)
+    contrasena = db.Column(db.String(200), nullable=False)
     rol = db.Column(db.String(50), nullable=False)
 
 class Simulacion(db.Model):

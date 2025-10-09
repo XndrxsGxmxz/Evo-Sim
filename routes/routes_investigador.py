@@ -11,8 +11,8 @@ import requests
 from matplotlib.ticker import FuncFormatter
 from datetime import datetime
 from werkzeug.utils import secure_filename
-from models import Simulacion
-from extensiones import db
+from db.models import Simulacion
+from db.extensiones import db
 import base64
 
 investigador = Blueprint('investigador', __name__, url_prefix='/investigador')

@@ -1,74 +1,12 @@
-import os
+import os 
 import json
-
-def menu_authority():
-    print("1. Create new simulation")
-    print("2. Load simulation")
-    print("3. Delete simulation")  # Add this new option
-    print("0. Back")
-    
-    option = input("\nSelect an option: ")
-    
-    if option == "1":
-        create_simulation()
-    elif option == "2":
-        load_simulation()
-    elif option == "3":
-        delete_simulation()  # Add this new condition
-    elif option == "0":
-        return
-    else:
-        print("Invalid option")
-
-def delete_simulation():
-    simulations_dir = "saved_simulations"
-    
-    if not os.path.exists(simulations_dir):
-        print("\nNo saved simulations found.")
-        return
-    
-    # Get list of saved simulations
-    saved_files = [f for f in os.listdir(simulations_dir) if f.endswith('.json')]
-    
-    if not saved_files:
-        print("\nNo saved simulations found.")
-        return
-    
-    print("\nAvailable simulations:")
-    for i, file in enumerate(saved_files, 1):
-        print(f"{i}. {file[:-5]}")  # Remove .json extension
-    
-    try:
-        choice = int(input("\nEnter the number of the simulation to delete (0 to cancel): "))
-        if choice == 0:
-            return
-        
-        if 1 <= choice <= len(saved_files):
-            file_to_delete = saved_files[choice - 1]
-            file_path = os.path.join(simulations_dir, file_to_delete)
-            
-            # Confirm deletion
-            confirm = input(f"Are you sure you want to delete '{file_to_delete[:-5]}'? (y/n): ").lower()
-            if confirm == 'y':
-                os.remove(file_path)
-                print(f"\nSimulation '{file_to_delete[:-5]}' has been deleted.")
-            else:
-                print("\nDeletion cancelled.")
-        else:
-            print("\nInvalid selection.")
-            
-    except ValueError:
-        print("\nInvalid input. Please enter a number.")
-    except Exception as e:
-        print(f"\nError deleting simulation: {str(e)}")
-        
-import os
+import base64 
 from flask import Blueprint, render_template, request, flash, redirect, url_for, current_app
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
 from datetime import datetime
-from extensiones import db
-from models import Simulacion
+from db.extensiones import db
+from db.models import Simulacion
 
 # Cambiar el prefijo a /autoridad
 autoridad_bp = Blueprint('autoridad', __name__, url_prefix='/autoridad')

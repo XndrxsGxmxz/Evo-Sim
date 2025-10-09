@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.env
+.env
+
+# Flask/Migrations
+instance/
+*.db
+*.sqlite3
+migrations/
+
+# VSCode
+.vscode/
+
+# Backup y archivos grandes
+backup/
+*.zip
+*.bak
+*.backup
+*.sql
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Archivos temporales
+*.swp
+*.swo
