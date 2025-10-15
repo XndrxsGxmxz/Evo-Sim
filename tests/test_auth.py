@@ -1,26 +1,20 @@
 import sys
 import os
+import pytest
+
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from app import create_app
-import unittest
 
-app = create_app()
 
-class AuthTestCase(unittest.TestCase):
-    def setUp(self):
-        self.app = app.test_client()
-        self.app.testing = True
+@pytest.fixture
 
-    def test_login_page_loads(self):
-        response = self.app.get('/auth/login')
-        self.assertEqual(response.status_code, 200)
-        self.assertIn(b'Correo', response.data)
+def test_login_page_loads(client):
+    response = client.get('/auth/login')
+    assert response.status_code == 200
+    assert b'Correo' in response.data
 
-    def login(self, correo, contrasena):
-        return self.app.post('/auth/login', data=dict(
-            correo=correo,
-            contrasena=contrasena
-        ), follow_redirects=True)
-
-if __name__ == '__main__':
-    unittest.main()
+def test_login_invalid(client):
+    response = client.post('/auth/login', data={
+        'correo': 'noexiste@correo.com',
+        'contrasena': 'incorrecta'
+    }, follow_redirects=True)
+    assert b'Correo o contrase' in response.data

@@ -1,10 +1,23 @@
-# mostrar_usuarios.py
-from app import create_app
-from models import Usuario
-from extensiones import db
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-app = create_app()
-with app.app_context():
-    usuarios = Usuario.query.all()
-    for u in usuarios:
-        print(f"{u.id} | {u.nombre_usuario} | {u.correo} | {u.rol}")
+from app import create_app
+from db.extensiones import db
+from db.models import Usuario
+
+def mostrar_usuarios():
+    app = create_app()
+    with app.app_context():
+        usuarios = Usuario.query.all()
+        print("\n📋 Lista de Usuarios:")
+        print("=" * 50)
+        for usuario in usuarios:
+            print(f"ID: {usuario.id}")
+            print(f"Nombre: {usuario.nombre_usuario}")
+            print(f"Correo: {usuario.correo}")
+            print(f"Rol: {usuario.rol}")
+            print("-" * 50)
+
+if __name__ == '__main__':
+    mostrar_usuarios()
