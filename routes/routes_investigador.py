@@ -12,7 +12,7 @@ from matplotlib.ticker import FuncFormatter
 from datetime import datetime
 from werkzeug.utils import secure_filename
 from db.models import Simulacion
-from db.extensiones import db
+from db.extensions import db
 import base64
 
 investigador = Blueprint('investigador', __name__, url_prefix='/investigador')

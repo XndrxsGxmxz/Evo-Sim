@@ -1,5 +1,5 @@
 from app import create_app
-from db.extensiones import db
+from db.extensions import db
 from db.models import Usuario  # Asegúrate de importar tus modelos aquí
 
 app = create_app()

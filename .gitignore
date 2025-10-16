@@ -1,26 +1,18 @@
 # Python
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
-*.env
+*.py[cod]
+*$py.class
+
+# Entorno virtual
+venv/
+env/
+
+# Variables de entorno
 .env
 
-# Flask/Migrations
-instance/
+# Base de datos
 *.db
 *.sqlite3
-migrations/
-
-# VSCode
-.vscode/
-
-# Backup y archivos grandes
-backup/
-*.zip
-*.bak
-*.backup
-*.sql
 
 # Archivos de sistema
 .DS_Store
@@ -29,6 +21,6 @@ Thumbs.db
 # Logs
 *.log
 
-# Archivos temporales
-*.swp
-*.swo
+# Carpetas de IDE
+.vscode/
+.idea/

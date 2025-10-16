@@ -5,7 +5,7 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for,
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
 from datetime import datetime
-from db.extensiones import db
+from db.extensions import db
 from db.models import Simulacion
 
 # Cambiar el prefijo a /autoridad

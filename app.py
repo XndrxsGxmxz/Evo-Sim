@@ -4,7 +4,7 @@ from flask_login import LoginManager, current_user
 from flask_bcrypt import Bcrypt
 import os
 
-from db.extensiones import db, bcrypt, login_manager
+from db.extensions import db, bcrypt, login_manager
 from routes.routes_estudiante import estudiante_bp    # Importa el Blueprint del Estudiante
 from routes.routes_admin import admin_bp              # Importa el Blueprint del Administrador
 from routes.routes_investigador import investigador   # Importa el blueprint 'investigador'
@@ -13,8 +13,8 @@ from routes.routes_autoridad import autoridad_bp      # Importa el Blueprint de 
 
 def create_app():  # Función para crear la app
     app = Flask(__name__)  
-    app.config['SECRET_KEY'] = 'tu_clave_secreta'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Juan5880#@localhost/evo_sim'
+    app.config['SECRET_KEY'] = 'Juan5880#'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Juan5880%23@evo-sim-db.cnsa0oc4az74.us-east-2.rds.amazonaws.com:5432/evo_sim_db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['UPLOAD_FOLDER'] = os.path.join(app.root_path, 'static', 'uploads')
 

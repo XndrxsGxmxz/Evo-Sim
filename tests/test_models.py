@@ -1,6 +1,6 @@
 import pytest
 from db.models import Usuario
-from db.extensiones import db
+from db.extensions import db
 
 @pytest.fixture(autouse=True)
 def setup_db(client):
